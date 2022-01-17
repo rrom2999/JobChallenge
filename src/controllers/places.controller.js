@@ -43,7 +43,16 @@ const getDistance = async (req, res) =>{
     console.log(place1);
     console.log(place2);
 
-    res.send(unit);
+    const place1Data = await pool.query(`SELECT * FROM places WHERE name = '${place1}'`);
+    const place2Data = await pool.query(`SELECT * FROM places WHERE name = '${place2}'`);
+    
+    res.json({
+        message:'getDistance',
+        body:{
+            place1: place1Data['rows'],
+            place2: place2Data['rows']
+        }
+    })
 };
 
 module.exports = {
