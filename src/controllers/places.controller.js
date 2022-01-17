@@ -17,7 +17,23 @@ const getPlaces = async (req, res) =>{
     res.status(200).json(response.rows);
 };
 
+const createPlace = async (req, res) =>{
+    const { name, latitude, longitude } = req.body;
+    if(!name || !latitude || !longitude){                       //In case there is a missing field to create
+        console.log("missing field");
+        res.send('Missing field');
+    }
+    const response = await pool.query('INSERT INTO places (name, latitude, longitude) VALUES ($1, $2, $3)', [name, latitude, longitude]);
+    res.json({
+        message: "New place created successfully",
+        body: {
+            place: {name, latitude, longitude}
+        }
+    })
+};
+
 
 module.exports = {
-    getPlaces
+    getPlaces,
+    createPlace
 };
