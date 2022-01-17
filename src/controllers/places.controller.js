@@ -32,8 +32,22 @@ const createPlace = async (req, res) =>{
     })
 };
 
+const getDistance = async (req, res) =>{
+    let {place1, place2, unit} = req.params;
+
+    //Formating params to use
+    place1 = place1.split(':')[1];
+    place2 = place2.split(':')[1];
+    unit = unit.split(':')[1];
+
+    console.log(place1);
+    console.log(place2);
+
+    res.send(unit);
+};
 
 module.exports = {
     getPlaces,
-    createPlace
+    createPlace,
+    getDistance
 };
