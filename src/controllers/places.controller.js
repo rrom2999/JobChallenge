@@ -55,8 +55,35 @@ const getDistance = async (req, res) =>{
     })
 };
 
+const getDistanceOptional = async (req, res) =>{
+    let {lat1, lon1, lat2, lon2, unit} = req.params;
+
+    //Formating params to use
+    lat1 = lat1.split(':')[1];
+    lon1 = lon1.split(':')[1];
+    lat2 = lat2.split(':')[1];
+    lon2 = lon2.split(':')[1];
+    unit = unit.split(':')[1];
+
+    console.log('place 1 lat: ' + lat1 + ' lon: ' + lon1);
+    console.log('place 2 lat: ' + lat2 + ' lon: ' + lon2);
+    
+    res.json({
+        message:'getDistance',
+        place1:{
+            latitude:  lat1,
+            longitude: lon1
+        },
+        place2:{
+            latitude:  lat2,
+            longitude: lon2
+        }
+    })
+};
+
 module.exports = {
     getPlaces,
     createPlace,
-    getDistance
+    getDistance,
+    getDistanceOptional
 };
