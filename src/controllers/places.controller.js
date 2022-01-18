@@ -65,9 +65,24 @@ const getDistanceOptional = async (req, res) =>{
     lon2 = lon2.split(':')[1];
     unit = unit.split(':')[1];
 
+    lon1 =  lon1 * Math.PI / 180;
+    lon2 = lon2 * Math.PI / 180;
+    lat1 = lat1 * Math.PI / 180;
+    lat2 = lat2 * Math.PI / 180;
+
+    let longitude = lon2 - lon1;
+    let latitude = lat2 - lat1;
+    let firstpart = Math.pow(Math.sin(latitude / 2), 2) + Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin(longitude / 2),2);
+    let secondpart = 2 * Math.asin(Math.sqrt(firstpart));
+
+    let radiusKm = 6371;
+
+    let totalDistance = secondpart * radiusKm;
+
     console.log('place 1 lat: ' + lat1 + ' lon: ' + lon1);
     console.log('place 2 lat: ' + lat2 + ' lon: ' + lon2);
-    
+    console.log('distance: ' + totalDistance);
+
     res.json({
         message:'getDistance',
         place1:{
@@ -77,7 +92,8 @@ const getDistanceOptional = async (req, res) =>{
         place2:{
             latitude:  lat2,
             longitude: lon2
-        }
+        },
+        distance: totalDistance
     })
 };
 
